@@ -5,6 +5,8 @@
          colors="true"
          bootstrap="../vendor/autoload.php"
 >
+
+    format-coverage --output coverage/codeclimate.$SUITE.json
     <testsuites>
         <testsuite name="All">
             <directory>PatternCatalog</directory>
@@ -14,5 +16,9 @@
     <php>
         <includePath>../src</includePath>
     </php>
+
+    <logging>
+        <log type="coverage-clover" target="coverage/codeclimate.xml"/>
+    </logging>
 
 </phpunit>
