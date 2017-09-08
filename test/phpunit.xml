@@ -6,7 +6,6 @@
          bootstrap="../vendor/autoload.php"
 >
 
-    format-coverage --output coverage/codeclimate.$SUITE.json
     <testsuites>
         <testsuite name="All">
             <directory>PatternCatalog</directory>
@@ -17,8 +16,14 @@
         <includePath>../src</includePath>
     </php>
 
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../src</directory>
+        </whitelist>
+    </filter>
+
     <logging>
-        <log type="coverage-clover" target="coverage/codeclimate.xml"/>
+        <log type="coverage-clover" target="../coverage/codeclimate.xml"/>
     </logging>
 
 </phpunit>
