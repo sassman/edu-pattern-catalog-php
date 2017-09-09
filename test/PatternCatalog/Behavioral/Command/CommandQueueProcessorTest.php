@@ -18,11 +18,31 @@ class CommandQueueProcessorTest extends PHPUnit_Framework_TestCase
         $queue->pushMany([$this]);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function test_pushMany_withNoArray_throwsUp()
+    {
+        $queue = new CommandQueueProcessor();
+        $queue->pushMany($this);
+    }
+
     public function test_execution_withSingleCommands_runsThru()
     {
         $queue = new CommandQueueProcessor();
         $queue->pushOne($this->createConcreteCommand());
         $queue->pushOne($this->createConcreteCommand());
+
+        $queue->execute();
+    }
+
+    public function test_execution_withMultipleCommands_runsThru()
+    {
+        $queue = new CommandQueueProcessor();
+        $queue->pushMany([
+            $this->createConcreteCommand(),
+            $this->createConcreteCommand()
+        ]);
 
         $queue->execute();
     }
