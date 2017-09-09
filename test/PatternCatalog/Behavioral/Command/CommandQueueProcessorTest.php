@@ -9,6 +9,15 @@ use PHPUnit_Framework_TestCase;
  */
 class CommandQueueProcessorTest extends PHPUnit_Framework_TestCase
 {
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function test_pushMany_withNoCommands_throwsUp()
+    {
+        $queue = new CommandQueueProcessor();
+        $queue->pushMany([$this]);
+    }
+
     public function test_execution_withSingleCommands_runsThru()
     {
         $queue = new CommandQueueProcessor();
