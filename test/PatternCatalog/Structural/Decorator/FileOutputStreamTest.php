@@ -49,4 +49,10 @@ class FileOutputStreamTest extends InterceptedTestCase
         parent::setUp();
         $this->out = new FileOutputStream($this->memory);
     }
+
+    protected function tearDown()
+    {
+        parent::tearDown();
+        $this->out = null;
+    }
 }
