@@ -2,8 +2,12 @@
 
 namespace PatternCatalog\Structural\Decorator;
 
+use PatternCatalog\Structural\Decorator\Formatter\PrintfStringFormatter;
+
 class FileOutputStream implements OutputStream
 {
+    use PrintfStringFormatter;
+
     /**
      * @var resource
      */
@@ -16,11 +20,8 @@ class FileOutputStream implements OutputStream
     public function __construct($fileUrlOrHandle)
     {
         if (is_string($fileUrlOrHandle)) {
-            if (!is_file($fileUrlOrHandle)) {
-                throw new \InvalidArgumentException('no valid file provided');
-            }
-            if (!is_writable($fileUrlOrHandle)) {
-                throw new \InvalidArgumentException('file is not writable');
+            if (is_dir($fileUrlOrHandle)) {
+                throw new \InvalidArgumentException('directories are not supported.');
             }
             $fileUrlOrHandle = \fopen($fileUrlOrHandle, 'w');
         }
@@ -55,6 +56,6 @@ class FileOutputStream implements OutputStream
      */
     public function printf($string, ...$parameter)
     {
-        \fwrite($this->handle, vsprintf($string, $parameter));
+        \fwrite($this->handle, $this->format($string, $parameter));
     }
 }
