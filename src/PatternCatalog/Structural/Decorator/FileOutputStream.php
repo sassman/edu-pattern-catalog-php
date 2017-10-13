@@ -11,14 +11,21 @@ class FileOutputStream implements OutputStream
 
     /**
      * @param string|resource $fileUrlOrHandle
+     * @throws \InvalidArgumentException
      */
     public function __construct($fileUrlOrHandle)
     {
         if (is_string($fileUrlOrHandle)) {
+            if (!is_file($fileUrlOrHandle)) {
+                throw new \InvalidArgumentException('no valid file provided');
+            }
+            if (!is_writable($fileUrlOrHandle)) {
+                throw new \InvalidArgumentException('file is not writable');
+            }
             $fileUrlOrHandle = \fopen($fileUrlOrHandle, 'w');
         }
         if (!is_resource($fileUrlOrHandle)) {
-            throw new \UnexpectedValueException('argument should be string or resource');
+            throw new \InvalidArgumentException('argument should be string or resource');
         }
         $this->handle = $fileUrlOrHandle;
     }

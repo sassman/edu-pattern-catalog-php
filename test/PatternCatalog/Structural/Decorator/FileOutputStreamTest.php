@@ -11,11 +11,19 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'InterceptedTestCase.php';
 class FileOutputStreamTest extends InterceptedTestCase
 {
     /**
-     * @expectedException \UnexpectedValueException
+     * @expectedException \InvalidArgumentException
      */
     public function test_constructor_withNonSupportedArgument()
     {
         new FileOutputStream(4.5);
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function test_constructor_withNonFileWillThrow()
+    {
+        new FileOutputStream('/tmp');
     }
 
     public function test_printf_withoutAnyArguments()
