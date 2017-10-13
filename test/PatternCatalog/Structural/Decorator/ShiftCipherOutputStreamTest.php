@@ -11,7 +11,7 @@ class ShiftCipherOutputStreamTest extends InterceptedTestCase
 {
     public function test_print_WillShiftByN()
     {
-        $this->out->printf('This is Caesar!');
+        $this->out->printf('This is %s!', 'Caesar');
         $this->assertThat($this->getMemory(), $this->equalTo('Guvf vf Pnrfne!'));
     }
 

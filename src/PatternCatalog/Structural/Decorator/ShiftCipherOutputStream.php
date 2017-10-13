@@ -35,7 +35,7 @@ class ShiftCipherOutputStream implements OutputStream
      */
     public function println($string, ...$parameter)
     {
-        $this->stream->println($this->encode($string));
+        $this->stream->println($this->encode($this->format($string, $parameter)));
     }
 
     /**
@@ -45,7 +45,7 @@ class ShiftCipherOutputStream implements OutputStream
      */
     public function printf($string, ...$parameter)
     {
-        $this->stream->printf($this->encode($string));
+        $this->stream->printf($this->encode($this->format($string, $parameter)));
     }
 
     /**
