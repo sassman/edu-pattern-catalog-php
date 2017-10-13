@@ -10,6 +10,14 @@ require_once __DIR__ . DIRECTORY_SEPARATOR . 'InterceptedTestCase.php';
  */
 class FileOutputStreamTest extends InterceptedTestCase
 {
+    /**
+     * @expectedException \UnexpectedValueException
+     */
+    public function test_constructor_withNonSupportedArgument()
+    {
+        new FileOutputStream(4.5);
+    }
+
     public function test_printf_withoutAnyArguments()
     {
         $this->out->printf('Foo Bar Bak');
