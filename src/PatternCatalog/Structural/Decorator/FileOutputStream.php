@@ -15,14 +15,12 @@ class FileOutputStream implements OutputStream
     public function __construct($fileUrlOrHandle)
     {
         if (is_string($fileUrlOrHandle)) {
-            $this->handle = \fopen($fileUrlOrHandle, 'w');
-        } else {
-            if (is_resource($fileUrlOrHandle)) {
-                $this->handle = $fileUrlOrHandle;
-            } else {
-                throw new \UnexpectedValueException('argument should be string or resource');
-            }
+            $fileUrlOrHandle = \fopen($fileUrlOrHandle, 'w');
         }
+        if (!is_resource($fileUrlOrHandle)) {
+            throw new \UnexpectedValueException('argument should be string or resource');
+        }
+        $this->handle = $fileUrlOrHandle;
     }
 
     /**
