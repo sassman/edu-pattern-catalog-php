@@ -8,7 +8,6 @@ namespace PatternCatalog\Structural\Decorator;
  *
  * So it does something on top of of the other OutputStream is doing.
  * Therefore it is decorating the OutputStream passed in the constructor.
- *
  */
 class BracesFormatStream implements OutputStream
 {
@@ -26,7 +25,10 @@ class BracesFormatStream implements OutputStream
     }
 
     /**
-     * @param string $string
+     * @see https://docs.python.org/3.4/library/string.html#formatstrings
+     * Note: The positional argument specifiers can NOT be omitted
+     *
+     * @param string $string supports now braces as formatter like println("my cool string {0} and {1}", "a", "b")
      * @param array ...$parameter
      * @return void
      */
