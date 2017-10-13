@@ -6,6 +6,7 @@ namespace PatternCatalog\Structural\Decorator;
 require_once __DIR__ . DIRECTORY_SEPARATOR . 'InterceptedTestCase.php';
 
 /**
+ * @todo mock away file usage
  * @group integration
  */
 class GzipOutputStreamTest extends InterceptedTestCase
