@@ -58,4 +58,12 @@ class FileOutputStream implements OutputStream
     {
         \fwrite($this->handle, $this->format($string, $parameter));
     }
+
+    /**
+     * @return resource
+     */
+    protected function getHandle()
+    {
+        return $this->handle;
+    }
 }
