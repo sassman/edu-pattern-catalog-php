@@ -2,14 +2,20 @@
 
 namespace PatternCatalog\Structural\Decorator;
 
-// TODO fix that inclusion
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'InterceptedTestCase.php';
-
 /**
  * @group unit
  */
-class BracesFormatStreamTest extends InterceptedTestCase
+class BracesFormatStreamTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var OutputStream
+     */
+    private $out;
+    /**
+     * @var MemoryOutputStream
+     */
+    private $memory;
+
     public function test_printf_withNoParameterNoHarm()
     {
         $this->out->printf('Foo Bar {0}');
@@ -43,6 +49,15 @@ class BracesFormatStreamTest extends InterceptedTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->out = new BracesFormatStream(new FileOutputStream($this->memory));
+        $this->memory = new MemoryOutputStream();
+        $this->out = new BracesFormatStream($this->memory);
+    }
+
+    /**
+     * @return string
+     */
+    private function getMemory()
+    {
+        return $this->memory->getMemory();
     }
 }
