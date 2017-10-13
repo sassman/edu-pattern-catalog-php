@@ -2,23 +2,21 @@
 
 namespace PatternCatalog\Structural\Decorator;
 
-// TODO fix that inclusion
-require_once __DIR__ . DIRECTORY_SEPARATOR . 'InterceptedTestCase.php';
+use PHPUnit_Framework_Constraint;
 
 /**
- * @todo mock away file usage
  * @group integration
  */
-class GzipOutputStreamTest extends InterceptedTestCase
+class GzipOutputStreamTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var string
+     * @var MemoryOutputStream
      */
-    private $filePathUncompressed = '/tmp/' . __CLASS__;
+    private $memory;
     /**
-     * @var string
+     * @var OutputStream
      */
-    private $filePath;
+    private $out;
 
     public function test_println_willCreateValidGzipFile()
     {
@@ -41,33 +39,26 @@ class GzipOutputStreamTest extends InterceptedTestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->filePath = $this->filePathUncompressed . '.gz';
-        $this->out = new GzipOutputStream(new FileOutputStream($this->filePath));
+        $this->memory = new MemoryOutputStream();
+        $this->out = new GzipOutputStream($this->memory);
     }
 
-    protected function tearDown()
+    /**
+     * @param PHPUnit_Framework_Constraint $expectedToBe
+     */
+    private function assertThatGzipContent(PHPUnit_Framework_Constraint $expectedToBe)
     {
-        $this->cleanUpFiles();
-        parent::tearDown();
+        $content = $this->memory->getMemory();
+        $original = gzdecode($content);
+
+        $this->assertThat($original, $expectedToBe);
     }
 
+    /**
+     * @param string $string
+     */
     private function assertThatGzipContentEquals($string)
     {
-        exec("gzip -df '{$this->filePath}'");
-        $content = file_get_contents($this->filePathUncompressed);
-        $this->assertThat($content, $this->equalTo($string));
-    }
-
-    private function cleanUpFiles()
-    {
-        $this->cleanUpFile($this->filePathUncompressed);
-        $this->cleanUpFile($this->filePath);
-    }
-
-    private function cleanUpFile($file)
-    {
-        if (is_file($file)) {
-            unlink($file);
-        }
+        $this->assertThatGzipContent($this->equalTo($string));
     }
 }
