@@ -5,6 +5,12 @@ Design Pattern Catalog
 [![Code Climate](https://codeclimate.com/github/sassman/pattern-catalog-php/badges/gpa.svg)](https://codeclimate.com/github/sassman/pattern-catalog-php)
 [![Test Coverage](https://codeclimate.com/github/sassman/pattern-catalog-php/badges/coverage.svg)](https://codeclimate.com/github/sassman/pattern-catalog-php/coverage)
 
+Purpose
+-------
+
+This whole project is educational material. The shown code is not production grade code.
+It should illustrate the concepts and guide to clean solutions.
+
 Decorator Pattern
 -----------------
 
